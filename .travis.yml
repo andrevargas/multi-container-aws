@@ -1,0 +1,24 @@
+sudo: required
+language: generic
+
+services:
+  - docker
+
+before_install:
+  - docker build -t andrevargas/multi-container-aws-client -f ./client/Dockerfile.dev ./client
+
+scripts:
+  - docker run -e CI=true andrevargas/multi-container-aws-client yarn test
+
+after_success:
+  - docker build -t andrevargas/multi-container-aws-api ./api
+  - docker build -t andrevargas/multi-container-aws-nginx ./nginx
+  - docker build -t andrevargas/multi-container-aws-client ./client
+  - docker build -t andrevargas/multi-container-aws-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Push the images to the registry
+  - docker push andrevargas/multi-container-aws-api
+  - docker push andrevargas/multi-container-aws-nginx
+  - docker push andrevargas/multi-container-aws-client
+  - docker push andrevargas/multi-container-aws-worker

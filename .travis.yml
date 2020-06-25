@@ -22,3 +22,17 @@ after_success:
   - docker push andrevargas/multi-container-aws-nginx
   - docker push andrevargas/multi-container-aws-client
   - docker push andrevargas/multi-container-aws-worker
+
+deploy:
+  edge: true
+  on:
+    branch: master
+  provider: elasticbeanstalk
+  app: multi-container-aws
+  env: MultiContainerAws-env
+  region: us-east-1
+  bucket_name: elasticbeanstalk-us-east-1-609982889420
+  bucket_path: multi-container-aws
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
+  

@@ -41,7 +41,7 @@ export default function Fibonacci() {
       </Form>
 
       <Values>
-        <Title>Indexes I have seen 👀</Title>
+        <Title>Indexes I have seen</Title>
         {allValues.map((item, index) => (
           <Number key={item.number}>
             {item.number}
@@ -50,7 +50,7 @@ export default function Fibonacci() {
         ))}
       </Values>
       <Values>
-        <Title>Calculated values 🔢</Title>
+        <Title>Calculated values</Title>
         {Object.keys(currentValues).map(key => (
           <Number key={key} style={{ display: 'block' }}>
            {key} <Arrow>&rarr;</Arrow> {currentValues[key]}
